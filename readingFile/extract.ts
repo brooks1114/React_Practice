@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+// Run command
+// npx ts-node main/src/extract.ts
 interface FileStructure {
     name: string;
     type: 'folder' | 'file';
@@ -58,9 +60,9 @@ const buildFileStructure = (dirPath: string): FileStructure[] => {
 };
 
 const main = () => {
-    const projectPath = path.resolve('./src'); // Change this to your project path
-    const structure = buildFileStructure(projectPath);
-    const outputPath = path.resolve('./documentation.json');
+    const mainPath = path.resolve(__dirname, './main'); // Adjust the path to your "main" folder
+    const structure = buildFileStructure(mainPath);
+    const outputPath = path.resolve(__dirname, './main/documentation.json');
 
     fs.writeFileSync(outputPath, JSON.stringify(structure, null, 2));
     console.log(`Documentation JSON created at: ${outputPath}`);
