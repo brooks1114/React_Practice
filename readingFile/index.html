@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Viewer</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Project Documentation</h1>
+    <div id="output"></div>
+    <script>
+        axios.get('http://localhost:3000/documentation')
+            .then(response => {
+                const pre = document.createElement('pre');
+                pre.textContent = JSON.stringify(response.data, null, 2);
+                document.getElementById('output').appendChild(pre);
+            })
+            .catch(error => {
+                console.error('Error fetching documentation:', error);
+            });
+    </script>
+</body>
+
+</html>
