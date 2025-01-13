@@ -14,3 +14,18 @@ import fs from 'fs';
     at node: internal / main / run_main_module: 28: 49
 
 Node.js v20.13.1
+
+
+
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Directory containing source files
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const SOURCE_DIR = path.join(__dirname, '../src/components');
+// Output files
+const JSON_OUTPUT = path.join(__dirname, '../rules.json');
+const MARKDOWN_OUTPUT = path.join(__dirname, '../RULES.md');
