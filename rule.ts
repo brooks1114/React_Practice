@@ -1,51 +1,16 @@
-// Rule Metadata:
-// Given:
-//   OR:
-//     - Transaction type, is, Transfer.
-//     - Transaction type, is, Rewrite AND
-//         - Current active page, is, Quote Summary Page AND
-//         - Visit count on Quote Summary Page, is less than or equal to, 1 AND
-//         - (Rating program code, is, Omega2 OR Rating program code, is, Omega1) AND
-//         - (Rewrite reason, is, Default Data Input Value OR Rewrite reason, is, Rewrite Reason 1st Nonpay)
-// When: System, evaluates, rule conditions.
-// Then: Expected element, is, visible.
+(node: 9036) Warning: To load an ES module, set "type": "module" in the package.json or use the.mjs extension.
+(Use`node --trace-warnings ...` to show where the warning was created)
+C: \Users\N0161651\REPO\ronin - auto - playwright - automation\scripts\generateRules.ts: 1
+import fs from 'fs';
+^^^^^^
 
-function parseCondition(statement) {
-    const logicalKeywords = ['AND', 'OR'];
-    const regex = /\s*(AND|OR|[\(\)])\s*|([^ANDOR\(\)\s,]+)\s*,\s*([^,]+)\s*,\s*([^,\(\)]+)\s*/g;
-    const tokens = [...statement.matchAll(regex)].map(([_, operator, subject, action, noun]) => {
-        if (operator) return operator;
-        return { subject: subject.trim(), action: action.trim(), noun: noun.trim() };
-    });
+    SyntaxError: Cannot use import statement outside a module
+    at wrapSafe(node: internal / modules / cjs / loader: 1281: 20)
+    at Module._compile(node: internal / modules / cjs / loader: 1321: 27)
+    at Module._extensions..js(node: internal / modules / cjs / loader: 1416: 10)
+    at Module.load(node: internal / modules / cjs / loader: 1208: 32)
+    at Module._load(node: internal / modules / cjs / loader: 1024: 12)
+    at Function.executeUserEntryPoint[as runMain](node: internal/modules/run_main: 174: 12)
+    at node: internal / main / run_main_module: 28: 49
 
-    function buildTree(tokens) {
-        const stack = [];
-        const result = [];
-
-        tokens.forEach((token) => {
-            if (typeof token === 'string' && (token === 'AND' || token === 'OR' || token === '(')) {
-                stack.push(token);
-            } else if (token === ')') {
-                let group = [];
-                while (stack.length && stack[stack.length - 1] !== '(') {
-                    group.unshift(stack.pop());
-                }
-                stack.pop(); // Remove '('
-                const operator = stack.pop();
-                if (operator) {
-                    group = { [operator]: group };
-                }
-                stack.push(group);
-            } else {
-                stack.push(token);
-            }
-        });
-
-        while (stack.length) {
-            result.unshift(stack.pop());
-        }
-        return result.length === 1 ? result[0] : result;
-    }
-
-    return buildTree(tokens);
-}
+Node.js v20.13.1
