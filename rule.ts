@@ -1,31 +1,12 @@
-(node: 9036) Warning: To load an ES module, set "type": "module" in the package.json or use the.mjs extension.
-(Use`node --trace-warnings ...` to show where the warning was created)
-C: \Users\N0161651\REPO\ronin - auto - playwright - automation\scripts\generateRules.ts: 1
-import fs from 'fs';
-^^^^^^
+PS C: \Users\N0161651\REPO\ronin - auto - playwright - automation > node scripts / generateRules.mjs
+file:///C:/Users/N0161651/REPO/ronin-auto-playwright-automation/scripts/generateRules.mjs:14
+interface Condition {
+^^^^^^^^^
 
-    SyntaxError: Cannot use import statement outside a module
-    at wrapSafe(node: internal / modules / cjs / loader: 1281: 20)
-    at Module._compile(node: internal / modules / cjs / loader: 1321: 27)
-    at Module._extensions..js(node: internal / modules / cjs / loader: 1416: 10)
-    at Module.load(node: internal / modules / cjs / loader: 1208: 32)
-    at Module._load(node: internal / modules / cjs / loader: 1024: 12)
-    at Function.executeUserEntryPoint[as runMain](node: internal/modules/run_main: 174: 12)
-    at node: internal / main / run_main_module: 28: 49
+    SyntaxError: Unexpected strict mode reserved word
+    at ModuleLoader.moduleStrategy(node: internal / modules / esm / translators: 169: 18)
+    at callTranslator(node: internal / modules / esm / loader: 272: 14)
+    at ModuleLoader.moduleProvider(node: internal / modules / esm / loader: 278: 30)
+    at async link(node: internal / modules / esm / module_job: 78: 21)
 
 Node.js v20.13.1
-
-
-
-
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// Directory containing source files
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const SOURCE_DIR = path.join(__dirname, '../src/components');
-// Output files
-const JSON_OUTPUT = path.join(__dirname, '../rules.json');
-const MARKDOWN_OUTPUT = path.join(__dirname, '../RULES.md');
