@@ -1,0 +1,32 @@
+rules:
+  - id: 1
+    name: Example Rule with Complex Logic
+    description: "This rule applies a discount if the user meets multiple conditions."
+    given:
+      - subject: "user"
+        action: "has"
+        noun: "membership"
+    andgiven:
+      - subject: "user"
+        action: "is"
+        noun: "active"
+    orgiven:
+      - subject: "user"
+        action: "has"
+        noun: "promo code"
+    when:
+      - subject: "transaction"
+        action: "exceeds"
+        noun: "$100"
+    andwhen:
+      - subject: "user"
+        action: "is"
+        noun: "loyal customer"
+    then:
+      - subject: "discount"
+        action: "apply"
+        noun: "10%"
+    orthen:
+      - subject: "discount"
+        action: "apply"
+        noun: "5%"

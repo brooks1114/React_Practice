@@ -1,0 +1,120 @@
+
+
+
+1. Constants File(constants.ts):
+
+export const CONSTANTS = {
+    USER: "user",
+    TRANSACTION: "transaction",
+    DISCOUNT: "discount",
+};
+
+
+
+
+2. YAML File with Placeholders(rules.yml):
+rules:
+- id: 1
+name: Example Rule
+given:
+- subject: "{{USER}}"
+action: "has"
+noun: "membership"
+then:
+- subject: "{{DISCOUNT}}"
+action: "apply"
+noun: "10%"
+
+
+3. Processing Script(processYaml.ts):
+Replace placeholders with values from the constants file using a simple scrip
+
+import fs from 'fs';
+import yaml from 'yaml';
+import { CONSTANTS } from './constants';
+
+// Function to replace placeholders in an object
+function replacePlaceholders(obj: any, constants: Record<string, string>): any {
+    if (typeof obj === 'string') {
+        return obj.replace(/{{(.*?)}}/g, (_, key) => constants[key] || `{{${key}}}`);
+    }
+    if (Array.isArray(obj)) {
+        return obj.map(item => replacePlaceholders(item, constants));
+    }
+    if (typeof obj === 'object' && obj !== null) {
+        return Object.fromEntries(
+            Object.entries(obj).map(([k, v]) => [k, replacePlaceholders(v, constants)])
+        );
+    }
+    return obj;
+}
+
+// Load and process the YAML
+const yamlFile = fs.readFileSync('rules.yml', 'utf8');
+const parsedYaml = yaml.parse(yamlFile);
+const processedYaml = replacePlaceholders(parsedYaml, CONSTANTS);
+
+console.log(JSON.stringify(processedYaml, null, 2));
+
+
+Example Output:
+Processed YAML converted to JSON after substitutions:
+
+{
+    "rules": [
+        {
+            "id": 1,
+            "name": "Example Rule",
+            "given": [
+                {
+                    "subject": "user",
+                    "action": "has",
+                    "noun": "membership"
+                }
+            ],
+            "then": [
+                {
+                    "subject": "discount",
+                    "action": "apply",
+                    "noun": "10%"
+                }
+            ]
+        }
+    ]
+}
+
+
+
+
+rules:
+- id: 1
+name: Example Rule with Complex Logic
+description: "This rule applies a discount if the user meets multiple conditions."
+given:
+- subject: "user"
+action: "has"
+noun: "membership"
+andgiven:
+- subject: "user"
+action: "is"
+noun: "active"
+orgiven:
+- subject: "user"
+action: "has"
+noun: "promo code"
+when:
+- subject: "transaction"
+action: "exceeds"
+noun: "$100"
+andwhen:
+- subject: "user"
+action: "is"
+noun: "loyal customer"
+then:
+- subject: "discount"
+action: "apply"
+noun: "10%"
+orthen:
+- subject: "discount"
+action: "apply"
+noun: "5%"
