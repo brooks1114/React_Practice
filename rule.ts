@@ -80,14 +80,20 @@ export default BusinessRuleTracer;
 
 
 
+import BusinessRuleTracer from "../../../../logger/logger";
 
+getBusinessRuleTracer(): BusinessRuleTracer {
+    return new BusinessRuleTracer()
+}
+
+const tracer = new BusinessRuleTracer();
 
 
 import BusinessRuleTracer from "./BusinessRuleTracer";
 import { BUSINESS_RULE_KEYS } from "./constants";
 
 // Create an instance of the logger
-const tracer = new BusinessRuleTracer();
+
 
 // Log rule 1 with an array of key-value pairs
 tracer.logRule(1, [
@@ -104,7 +110,11 @@ tracer.logRule(24, [
 // The JSON log file will automatically map the constants to their string values
 
 
-
+tracer.logRule(3, [
+    { key: "JURS", value: bt.jurisdiction },
+    { key: "RATING_PROGRAM_CODE", value: bt.ratingProgramCode },
+    { key: "USER_DISTRIBUTION_CHANNEL", value: bt.currentUserDistributionChannel },
+]);
 
 
 
